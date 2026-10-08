@@ -1,0 +1,426 @@
+"""
+llm_visual_extractor.py
+Reads steel-sector data from PDF pages (tables AND charts) via Gemini's
+Interactions API, with automatic model fallback. Appends validated rows to
+data/raw_steel_data.csv.
+"""
+
+import os
+import re
+import sys
+import csv
+import json
+import time
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types   # add to imports
+import threading   # add to imports
+
+load_dotenv()
+
+
+
+
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY"),
+    http_options=types.HttpOptions(
+        timeout=180_000,   # ms. Unverified that Interactions honors this.
+        retry_options=types.HttpRetryOptions(attempts=1),
+    ),
+)
+
+# Tried in order. A model is abandoned for the batch once MAX_RETRIES is exceeded.
+MODEL_CHAIN = [
+    "gemini-3.8-flash",
+    "gemini-3.7-flash",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+]
+MODEL_COOLDOWN_S = 600          # skip an exhausted model for this long
+_blocked_until = {}             # model -> time.monotonic() when usable again
+
+CALL_DEADLINE_S = 240
+MAX_RETRIES = 3   # was 5; overload spikes are per-model, so switch sooner
+PDF_DIR = "pdfs"
+CSV_PATH = "data/raw_steel_data.csv"
+DONE_LOG = "data/processed_files.txt"
+
+RETRY_WAIT_SECONDS = 10
+MIN_SECONDS_BETWEEN_CALLS = 12
+BATCH_SIZE = 5
+UPLOAD_TIMEOUT_S = 300
+TRANSIENT_CODES = {429, 500, 503, 504}
+FATAL_CODES = {401, 403}        # bad key/permissions: switching model won't help
+
+TONNAGE_FIELDS = [
+    "consumption_value", "crude_steel_production", "finished_steel_production",
+    "crude_steel_export", "crude_steel_import",
+    "finished_steel_export", "finished_steel_import",
+    "coal_imports", "steel_imports",
+]
+FIELDNAMES = (
+    ["source_file", "period_month", "cumulative_months", "period_year"]
+    + TONNAGE_FIELDS
+    + ["value_source", "model_used", "needs_review"]
+)
+MONTHS = {
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December",
+}
+
+# ---------- Structured output schema ----------
+_NUM = {"type": ["number", "null"]}
+_STR = {"type": ["string", "null"]}
+RECORD_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "source_file": {"type": "string"},
+        "period_month": _STR,
+        "cumulative_months": _STR,
+        "period_year": _STR,
+        **{f: _NUM for f in TONNAGE_FIELDS},
+        "value_source": {"type": "string", "enum": ["table", "text", "chart", "mixed"]},
+    },
+    "required": ["source_file", "period_month", "cumulative_months", "period_year",
+                 *TONNAGE_FIELDS, "value_source"],
+}
+RESPONSE_FORMAT = {
+    "type": "text",
+    "mime_type": "application/json",
+    "schema": {"type": "array", "items": RECORD_SCHEMA},
+}
+
+SYSTEM_PROMPT = """
+You extract steel sector data from Indian government reports.
+You receive several PDF reports as visual input, each preceded by a text label
+giving its source_file name. Read tables AND bar/line charts/graphs, not just
+body text. Treat every document independently and tag every record with the
+correct source_file.
+
+Return ONE JSON array covering all documents. One object per month per document
+(or per cumulative period when no monthly breakdown exists).
+
+GENERAL RULES
+- Never invent or estimate data that is not on the page. Use null if a field
+  cannot be found in a table, chart or text.
+- Chart-only values (no printed number): read them off the axis and set
+  value_source to "chart". Printed values: "table" or "text". Mixed: "mixed".
+- Placeholders ("-", "--", "NA", "n.a.", blank) mean null. Use 0 only if 0 is printed.
+- Plain decimal numbers, dot separator, no thousands separators, no units, no %.
+- Percentages (growth, YoY, MoM, share) are never tonnage values.
+- If provisional and revised figures both exist for a month, use the revised one.
+
+UNITS: every tonnage field must be in MILLION TONNES.
+- Read the unit from each table's / chart's own header, caption, footnote or axis.
+  Different tables in one report can use different units; check each separately.
+- Conversions: "million tonnes"/"MT" -> as is; "thousand tonnes"/"'000 tonnes"/"KT"
+  -> divide by 1,000; "lakh tonnes" -> divide by 10; plain "tonnes" -> divide by 1,000,000.
+- Sanity guide (not a filter): monthly consumption, crude and finished production
+  are typically 2-16 Mt; monthly finished steel exports/imports typically 0.1-2 Mt.
+  A value above 100 is almost certainly still in thousand tonnes: re-check and
+  convert (586 -> 0.586) unless the table clearly states million tonnes.
+
+TIME PERIODS
+- period_year is the CALENDAR year of the month, not the fiscal year. Indian FY is
+  April-March: Jan/Feb/Mar 2024 belong to FY 2023-24 but have period_year "2024";
+  Apr-Dec 2023 have "2023".
+- Single month: fill period_month + period_year, cumulative_months = null.
+- Cumulative period with no monthly breakdown (e.g. "January-April"): fill
+  cumulative_months (full month names) + period_year, period_month = null.
+- Never put a cumulative/YTD value into a single-month record or vice versa.
+- Trend tables/charts show several months and previous-year columns: create one
+  object per month with its own correct month and year. Never assign a
+  previous-year or previous-month value to the current month.
+
+FIELD DEFINITIONS
+- consumption_value: finished steel consumption for the month.
+- crude_steel_production: total crude steel production.
+- finished_steel_production: TOTAL finished steel (alloy/stainless + non-alloy).
+  If only a narrower variant exists (non-alloy only, "for sale"), return null.
+- finished_steel_export / finished_steel_import: total FINISHED steel trade only.
+  Not crude, semis, pig iron, sponge iron, or combined "total steel" rows.
+- crude_steel_export / crude_steel_import: crude steel or semis lines only.
+- steel_imports: only a separately labelled figure distinct from
+  finished_steel_import. Never copy one into the other.
+- coal_imports: only an explicit coal import tonnage. Never put steel here.
+- Never swap exports/imports or production/consumption. Verify each row label.
+
+DATA QUALITY
+- Every value must come from its own labelled row/column/bar for that month and
+  field. Never copy from another field, month or neighbouring column.
+"""
+
+
+class FatalAPIError(Exception):
+    """Auth/permission failure: no point trying other models."""
+
+class CallTimeout(Exception):
+    pass
+
+# ---------- error helpers ----------
+def _status(exc):
+    for attr in ("status_code", "code"):
+        v = getattr(exc, attr, None)
+        if isinstance(v, int):
+            return v
+    return None
+
+
+def _is_transient(exc):
+    code = _status(exc)
+    if code in TRANSIENT_CODES:
+        return True
+    name = type(exc).__name__
+    return code is None and ("Connection" in name or "Timeout" in name)
+
+
+def _retry_wait(exc, attempt):
+    m = re.search(r"retry in ([\d.]+)s", str(exc))
+    return float(m.group(1)) + 2 if m else RETRY_WAIT_SECONDS * attempt
+
+
+
+def create_with_deadline(deadline_s, **kwargs):
+    box = {}
+    def worker():
+        try:
+            box["result"] = client.interactions.create(**kwargs)
+        except BaseException as e:
+            box["error"] = e
+    th = threading.Thread(target=worker, daemon=True)
+    th.start()
+    th.join(deadline_s)
+    if th.is_alive():
+        raise CallTimeout(f"no response after {deadline_s}s")
+    if "error" in box:
+        raise box["error"]
+    return box["result"]
+
+
+# ---------- model calls ----------
+def _try_model(model, blocks, label):
+    """Up to MAX_RETRIES attempts on ONE model. Returns list[dict], or None if
+    this model should be abandoned (retries exceeded or non-retryable error)."""
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            t = time.monotonic()
+            print(f"starting interaction ({model}, {len(blocks)//2} docs)")
+            interaction = create_with_deadline(
+                CALL_DEADLINE_S,
+                model=model,
+                input=blocks,
+                system_instruction=SYSTEM_PROMPT,
+                response_format=RESPONSE_FORMAT,
+                store=False,
+            )
+            print(f"interaction ended in {time.monotonic() - t:.1f}s, "
+                  f"status={getattr(interaction, 'status', None)!r}")
+
+            status = getattr(interaction, "status", None)
+            print("status using getattr is ")
+
+            if status and status != "completed":
+                print("Runtime Error")
+                raise RuntimeError(f"interaction status={status}")
+            text = interaction.output_text
+            if not text:
+                print("Value Error")
+                raise ValueError("empty output_text")
+            data = json.loads(text)
+            if not isinstance(data, list):
+                print("")
+                raise ValueError("top-level JSON is not an array")
+            print("returning data")
+            return data
+
+        except (json.JSONDecodeError, ValueError, RuntimeError) as e:
+            print(f"[{label}] {model} attempt {attempt}/{MAX_RETRIES}: bad output ({e})")
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_WAIT_SECONDS)
+
+        except Exception as e:
+            code = _status(e)
+            if code in FATAL_CODES:
+                raise FatalAPIError(f"[{code}] {e}") from e
+            if _is_transient(e):
+                print(f"[{label}] {model} attempt {attempt}/{MAX_RETRIES}: [{code}] {e}")
+                if attempt < MAX_RETRIES:
+                    wait = _retry_wait(e, attempt)
+                    print(f"  retrying in {wait:.1f}s")
+                    time.sleep(wait)
+            else:
+                # e.g. 400/404: possibly model-specific, so try the next model
+                print(f"[{label}] {model} non-retryable (code={code}): {e}")
+                return None
+    return None
+
+
+def call_gemini(uploaded, label):
+    """uploaded: list of (uri, mime_type, source_filename).
+    Returns (list[dict], model_used) or (None, None)."""
+    blocks = []
+    for uri, mime, name in uploaded:
+        blocks.append({"type": "text", "text": f'source_file = "{name}"'})
+        blocks.append({"type": "document", "uri": uri, "mime_type": mime})
+    blocks.append({"type": "text",
+                   "text": "Extract the steel sector data from each of these reports."})
+
+    now = time.monotonic()
+    chain = [m for m in MODEL_CHAIN if _blocked_until.get(m, 0) <= now] or list(MODEL_CHAIN)
+
+    for model in chain:
+        print(f"[{label}] using {model}")
+        data = _try_model(model, blocks, label)
+        if data is not None:
+            return data, model
+        _blocked_until[model] = time.monotonic() + MODEL_COOLDOWN_S
+        print(f"[{label}] {model} exhausted; cooling down {MODEL_COOLDOWN_S}s, switching model.")
+    return None, None
+
+
+# ---------- files / validation / csv ----------
+def upload_and_wait(pdf_path, name):
+    try:
+        f = client.files.upload(file=pdf_path)
+    except Exception as e:
+        print(f"Upload failed for {name}: {e}")
+        return None
+    deadline = time.monotonic() + UPLOAD_TIMEOUT_S
+    while f.state.name == "PROCESSING" and time.monotonic() < deadline:
+        time.sleep(5)
+        f = client.files.get(name=f.name)
+    if f.state.name != "ACTIVE":
+        print(f"File not usable for {name} (state={f.state.name}).")
+        return None
+    return f
+
+
+def validate_rows(rows, expected_files, model_used):
+    """Coerce types and flag problems. Flags, never silently fixes."""
+    out = []
+    for r in rows:
+        if r.get("source_file") not in expected_files:
+            print(f"Dropping row with unknown source_file: {r.get('source_file')!r}")
+            continue
+        issues = []
+        for f in TONNAGE_FIELDS:
+            v = r.get(f)
+            if v is None:
+                continue
+            try:
+                v = float(v)
+            except (TypeError, ValueError):
+                issues.append(f"{f}:non-numeric")
+                r[f] = None
+                continue
+            if v < 0:
+                issues.append(f"{f}:negative")
+            if v > 100:
+                issues.append(f"{f}:>100(unit?)")
+            r[f] = v
+        pm, cm, py = r.get("period_month"), r.get("cumulative_months"), r.get("period_year")
+        if (pm is None) == (cm is None):
+            issues.append("month/cumulative: need exactly one")
+        if pm is not None and pm not in MONTHS:
+            issues.append("bad period_month")
+        if not (py and py.isdigit() and 1990 <= int(py) <= 2100):
+            issues.append("bad period_year")
+        r["model_used"] = model_used
+        r["needs_review"] = "; ".join(issues)
+        out.append(r)
+    return out
+
+
+def append_rows(rows):
+    if not rows:
+        return
+    os.makedirs(os.path.dirname(CSV_PATH), exist_ok=True)
+    write_header = not os.path.exists(CSV_PATH) or os.path.getsize(CSV_PATH) == 0
+    with open(CSV_PATH, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDNAMES, extrasaction="ignore", restval="")
+        if write_header:
+            w.writeheader()
+        w.writerows(rows)
+
+
+def load_done():
+    done = set()
+    if os.path.exists(CSV_PATH):
+        with open(CSV_PATH, newline="", encoding="utf-8") as f:
+            done.update(r["source_file"] for r in csv.DictReader(f))
+    if os.path.exists(DONE_LOG):
+        with open(DONE_LOG, encoding="utf-8") as f:
+            done.update(line.strip() for line in f if line.strip())
+    return done
+
+
+def mark_done(names):
+    os.makedirs(os.path.dirname(DONE_LOG), exist_ok=True)
+    with open(DONE_LOG, "a", encoding="utf-8") as f:
+        for n in names:
+            f.write(n + "\n")
+
+
+def chunk(items, size):
+    for i in range(0, len(items), size):
+        yield items[i:i + size]
+
+
+def process_batch(filenames):
+    uploaded, ok_names = [], []
+    for name in filenames:
+        f = upload_and_wait(os.path.join(PDF_DIR, name), name)
+        if f is not None:
+            print("uploaded: ", name)
+            uploaded.append((f.uri, f.mime_type or "application/pdf", name))
+            ok_names.append(name)
+            print("f is NOT None.")
+    if not uploaded:
+        return None, []
+    parsed, model_used = call_gemini(uploaded, f"batch({', '.join(ok_names)})")
+    if parsed is None:
+        print("parsed is None")
+        return None, []
+    print("DEBUG returned:", len(parsed), "rows; source_files =", {r.get("source_file") for r in parsed})
+    return validate_rows(parsed, set(ok_names), model_used), ok_names
+
+
+def main():
+    pdfs = sorted(f for f in os.listdir(PDF_DIR) if f.lower().endswith(".pdf"))
+    done = load_done()
+    pending = [f for f in pdfs if f not in done]
+    print(f"{len(pdfs)} PDFs, {len(pending)} pending, batch size {BATCH_SIZE}.")
+    print(f"Model chain: {' -> '.join(MODEL_CHAIN)}")
+
+    failed_batches = 0
+    for names in chunk(pending, BATCH_SIZE):
+        print(f"Extracting: {names}")
+        t0 = time.monotonic()
+        try:
+            rows, ok_names = process_batch(names)
+        except FatalAPIError as e:
+            print(f"Fatal API error, aborting run: {e}")
+            sys.exit(2)
+
+        wait = MIN_SECONDS_BETWEEN_CALLS - (time.monotonic() - t0)
+        if wait > 0:
+            time.sleep(wait)
+
+        if rows is None:
+            print(f"All models failed for batch, will retry on next run: {names}")
+            failed_batches += 1
+            continue
+
+        append_rows(rows)
+        mark_done(ok_names)
+        flagged = sum(1 for r in rows if r["needs_review"])
+        print(f"Wrote {len(rows)} rows ({flagged} flagged needs_review).")
+
+    if failed_batches:
+        print(f"{failed_batches} batch(es) failed on every model.")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,303 @@
+"""
+llm_visual_extractor.py
+Uses Gemini's vision capability to read steel sector data directly off
+PDF pages — including bar/line charts that plain text extraction can't
+capture. Writes to visual_steel_data.csv (same schema as steel_data.csv).
+"""
+
+import os
+import re
+import csv
+import json
+import time
+from google import genai
+from google.genai import errors
+from google.genai._gaos.lib.compat_errors import RateLimitError
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+MODEL = "gemini-3.6-flash"
+
+PDF_DIR = "pdfs"
+CSV_PATH = "data/raw_steel_data.csv"
+
+MAX_RETRIES = 5
+RETRY_WAIT_SECONDS = 10
+MIN_SECONDS_BETWEEN_CALLS = 12  # 5 RPM limit -> 60/5
+BATCH_SIZE = 5  # 96 PDFs / 20 RPD -> need >=5 per call to fit in one day
+
+SYSTEM_PROMPT = """You extract steel sector data from Indian government reports.
+You are given one or more PDF reports as visual input, each preceded by a text
+label giving its source_file ID (for example doc_1). Read tables AND any
+bar/line charts or graphs on each page — not just body text. Process every
+document independently.
+
+For EACH month found (in tables, charts, or narrative text) in EACH batch,
+return a JSON array of objects with this exact schema:
+
+{
+  "source_file": "<the source_file ID given for that document, copied exactly, e.g. doc_1>",
+  "period_month": "<month name, e.g. February, or null if not stated>",
+  "cumulative_months": "<range of month names, e.g. January-April, or null>",
+  "period_year": "<4-digit year as string, or null>",
+  "consumption_value": "<numeric value only, e.g. 9.26, or null if not found>",
+  "crude_steel_production": "<numeric value, or null>",
+  "finished_steel_production": "<numeric value, or null>",
+  "crude_steel_export": "<numeric value, or null>",
+  "crude_steel_import": "<numeric value, or null>",
+  "finished_steel_export": "<numeric value, or null>",
+  "finished_steel_import": "<numeric value, or null>",
+  "coal_imports": "<numeric value, or null>",
+  "steel_imports": "<numeric value, or null>",
+  "value_source": "<one of: table, text, chart, mixed>",
+  "extra_notes": "<printed figures for this period that do not fit the fields above, or null>"
+}
+
+Rules:
+- Return ONE combined JSON array covering all documents. No explanation, no markdown code fences.
+- Every object must contain every key above; use null where a value is unknown.
+- Always tag each object with the source_file ID of the document it came from,
+  copied exactly as given.
+- If a value is only visible as a bar/line on a chart (no printed number),
+  read the value off the chart, report it only to the precision the axis
+  supports (do not add false decimals), and set value_source to "chart".
+  Use "table" or "text" for printed values, and "mixed" if the record combines both.
+- If a field cannot be found anywhere (table, chart, or text), use null.
+- Normalize numeric values as plain numbers (no commas, no units inside the number).
+- Single-month information: fill "period_month" + "period_year", leave "cumulative_months" null.
+- Cumulative-period information (e.g. "October-December") with no monthly breakdown:
+  fill "cumulative_months" (full month names, e.g. "January-April") + "period_year",
+  leave "period_month" null.
+- Do not invent or estimate data that is not actually present on the page.
+- Extract every month and every cumulative period that has printed or charted
+  values, including earlier months shown in trend tables and charts.
+- Make sure to maintain consistency in the units of data extracted: EVERY tonnage
+  field must be expressed in million tonnes in the numeric value, regardless of the
+  unit the source table uses. See "UNITS AND SCALE" below for exact conversion rules.
+
+UNITS AND SCALE:
+- The tonnage fields are: consumption_value, crude_steel_production,
+  finished_steel_production, crude_steel_export, crude_steel_import,
+  finished_steel_export, finished_steel_import, coal_imports, steel_imports.
+  All of them must be converted to million tonnes before output.
+- Read the unit from each table's or chart's own header, caption, footnote or axis
+  label. Different tables in the same report can use different units (for example
+  production in million tonnes but exports/imports in '000 tonnes), so check the
+  unit separately for every table and chart. Never assume one unit for a whole document.
+- Conversions to million tonnes:
+    "million tonnes" / "MT" / "mt"            -> use as is
+    "thousand tonnes" / "'000 tonnes" / "KT"  -> divide by 1,000
+    "lakh tonnes"                             -> divide by 10
+    plain "tonnes"                            -> divide by 1,000,000
+  Treat "MT" as million tonnes unless the header or magnitude clearly shows otherwise.
+- Magnitude sanity check for SINGLE-MONTH values only (a guide for catching unit
+  mistakes, not a filter): monthly consumption, crude production and finished
+  production are typically about 2-16 million tonnes; monthly finished steel
+  exports and imports are typically about 0.1-2 million tonnes, occasionally
+  higher. If a single-month value is above 100, it is almost certainly still in
+  thousand tonnes: re-check the unit and convert (for example 586 should become
+  0.586).
+- Cumulative / year-to-date totals (for example April-March) are legitimately
+  above 100 million tonnes. Never convert or reject them just because they are large.
+
+FIELD DEFINITIONS (keep the same definition in every document):
+- consumption_value: finished steel consumption for the month.
+- crude_steel_production: total crude steel production.
+- finished_steel_production: TOTAL finished steel production (alloy/stainless +
+  non-alloy). If a report shows several variants (non-alloy only, "production for
+  sale", etc.), use the total finished steel figure in this field and list the
+  other variants in extra_notes. If only a narrower variant is available, return
+  null here rather than mixing definitions across reports, and record the narrower
+  variant in extra_notes.
+- finished_steel_export / finished_steel_import: total FINISHED steel trade. Do not
+  use crude steel, semis, pig iron, sponge iron, or combined "total steel" rows in
+  these fields; record such rows in extra_notes instead.
+- crude_steel_export / crude_steel_import: crude steel or semis trade lines only.
+- Never swap exports and imports, or production and consumption. Verify the row label
+  for every value.
+- steel_imports: only if the report gives a separately labelled steel imports figure
+  that is distinct from finished_steel_import. Never copy finished_steel_import into
+  steel_imports (or the reverse) just to fill the field; use null if no separate
+  figure exists.
+- coal_imports: only an explicitly stated coal import tonnage (coking coal etc.).
+  Never place steel figures in this field.
+- extra_notes: for any printed figure that belongs to this record's period but fits
+  none of the fields above (narrower variants, provisional figures, other
+  categories), write "<row label>: <value> <unit as printed>" separated by
+  semicolons. Keep the unit exactly as printed; do not convert it. Use null if
+  there is nothing to add.
+
+TIME PERIOD RULES:
+- period_year is the CALENDAR year of the month, not the fiscal year. Indian reports
+  use an April-March fiscal year: January, February and March 2024 belong to FY
+  2023-24 but must have period_year "2024"; April-December 2023 have "2023".
+- A report often shows several months (trend tables, charts) and previous-year
+  comparison columns. Create one object per month, each with its own correct
+  period_month and period_year. Never assign a previous-year or previous-month value
+  to the current month. Comparison columns that show a monthly value for a labelled
+  month and year must be extracted as their own record under that month and year.
+- Never put a cumulative / year-to-date value into a single-month record, and never
+  put a single-month value into a cumulative record.
+- Percentages (growth, YoY, MoM, share) are not tonnage values. Never use them.
+- If both provisional and revised figures are given for the same month, use the
+  revised (latest) figure in the main fields and record the provisional figure in
+  extra_notes.
+
+DATA QUALITY:
+- Every value must come from its own labelled row/column/bar for that month and field.
+  Never copy a value from another field, another month, or a neighbouring column to
+  fill a gap. When a table has many columns or months, confirm the row and column
+  headers for each value before reading it.
+- Placeholders such as "-", "--", "NA", "n.a.", or a blank cell mean null. Use 0 only
+  when 0 is actually printed.
+- For chart-only values, use the unit given on the axis label and apply the same
+  conversion rules as for tables.
+- Output plain decimal numbers with a dot as decimal separator, no thousands
+  separators, no unit text, no % signs.
+
+FINAL CHECK before returning the array:
+  1. Every tonnage value is in million tonnes (except figures kept as printed in extra_notes).
+  2. No SINGLE-MONTH tonnage value above 100 remains unless the source clearly states it in million tonnes.
+  3. period_year is the calendar year and period_month matches the month the value belongs to.
+  4. No cumulative or percentage figure sits in a monthly tonnage field.
+  5. Every object has every key.
+  6. The output is one valid JSON array with no extra text.
+"""
+
+
+def _call_gemini_with_retry_batch(uploaded_files, label):
+    """
+    uploaded_files: list of (uri, mime_type, source_filename) tuples, all ACTIVE.
+    Builds one interaction with a document block per file, each preceded by
+    a text block naming its source_file.
+    """
+    input_blocks = [{"type": "text", "text": SYSTEM_PROMPT}]
+    for uri, mime_type, source_filename in uploaded_files:
+        input_blocks.append({"type": "text", "text": f"source_file = \"{source_filename}\""})
+        input_blocks.append({"type": "document", "uri": uri, "mime_type": mime_type})
+    input_blocks.append({"type": "text", "text": "Extract the steel sector data from each of these reports."})
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            interaction = client.interactions.create(model=MODEL, input=input_blocks)
+            cleaned = interaction.output_text.replace("```json", "").replace("```", "").strip()
+            return json.loads(cleaned)
+
+        except (errors.APIError, RateLimitError) as e:
+            code = getattr(e, "code", 429)  # RateLimitError has no .code; treat as 429
+            message = getattr(e, "message", str(e))
+            transient = code in (429, 503)
+            if transient and attempt < MAX_RETRIES:
+                wait_time = RETRY_WAIT_SECONDS * attempt
+                match = re.search(r"retry in ([\d.]+)s", str(message))
+                if match:
+                    wait_time = float(match.group(1)) + 2
+                print(f"Attempt {attempt} failed for {label}: [{code}] {message}. Retrying in {wait_time:.1f}s...")
+                time.sleep(wait_time)
+            elif transient:
+                print(f"Visual extraction failed for {label} after {MAX_RETRIES} attempts.")
+                return None
+            else:
+                print(f"Visual extraction failed for {label} (non-retryable): [{code}] {message}")
+                return None
+
+        except json.JSONDecodeError as e:
+            print(f"Gemini returned invalid JSON for {label}: {e}")
+            return None
+
+
+def upload_and_wait(pdf_path, source_filename):
+    """Uploads one PDF and polls until ACTIVE. Returns the file object, or None on failure."""
+    uploaded = client.files.upload(file=pdf_path)
+
+    while uploaded.state.name == "PROCESSING":
+        print(f"Waiting for {source_filename} to finish processing...")
+        time.sleep(5)
+        uploaded = client.files.get(name=uploaded.name)
+
+    if uploaded.state.name == "FAILED":
+        print(f"File processing failed for {source_filename}.")
+        return None
+
+    return uploaded
+
+
+def extract_visual_data_batch(batch):
+    """
+    batch: list of (pdf_path, source_filename) tuples.
+    Uploads + polls each file (per-file), then makes ONE interactions.create
+    call covering all of them. Returns list[dict] or None.
+    """
+    uploaded_files = []
+    for pdf_path, source_filename in batch:
+        uploaded = upload_and_wait(pdf_path, source_filename)
+        if uploaded is not None:
+            uploaded_files.append((uploaded.uri, uploaded.mime_type, source_filename))
+
+    if not uploaded_files:
+        return None
+
+    label = f"batch({', '.join(name for _, _, name in uploaded_files)})"
+    parsed = _call_gemini_with_retry_batch(uploaded_files, label)
+    if parsed is None:
+        return None
+
+    for entry in parsed:
+        entry.setdefault("source_file", "")
+    return parsed
+
+
+def append_to_csv(row):
+    file_exists = os.path.exists(CSV_PATH)
+    with open(CSV_PATH, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=row.keys())
+        if not file_exists:
+            writer.writeheader()
+        writer.writerow(row)
+
+
+def already_in_csv(source_filename):
+    if not os.path.exists(CSV_PATH):
+        return False
+    with open(CSV_PATH, newline="") as f:
+        reader = csv.DictReader(f)
+        return any(r["source_file"] == source_filename for r in reader)
+
+
+def chunk(items, size):
+    for i in range(0, len(items), size):
+        yield items[i:i + size]
+
+
+def main():
+    pdf_files = [f for f in os.listdir(PDF_DIR) if f.lower().endswith(".pdf")]
+    print(f"{len(pdf_files)} PDFs found in {PDF_DIR}/.")
+
+    pending = [f for f in pdf_files if not already_in_csv(f)]
+    print(f"{len(pending)} PDFs need extraction, in batches of {BATCH_SIZE}.")
+
+    for filenames in chunk(pending, BATCH_SIZE):
+        batch = [(os.path.join(PDF_DIR, name), name) for name in filenames]
+        print(f"Visually extracting batch: {filenames}")
+
+        call_start = time.monotonic()
+        parsed_data = extract_visual_data_batch(batch)
+        elapsed = time.monotonic() - call_start
+
+        remaining = MIN_SECONDS_BETWEEN_CALLS - elapsed
+        if remaining > 0:
+            time.sleep(remaining)
+
+        if not parsed_data:
+            print(f"Skipping batch {filenames} — extraction failed or returned nothing.")
+            continue
+
+        for row in parsed_data:
+            append_to_csv(row)
+            print(f"Appended: {row}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,102 @@
+source_file,period_month,cumulative_months,period_year,consumption_value,crude_steel_production,finished_steel_production,crude_steel_export,crude_steel_import,finished_steel_export,finished_steel_import,coal_imports,steel_imports,value_source,model_used,needs_review
+April%202019_0.pdf,,April-March,2018,,103.131,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+April%202020.pdf,,April-March,2019,,110.921,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+August%202018.pdf,,April-August,2018,,,52.8,,,,,,,text,gemini-3.5-flash-lite,
+December%202018_5.pdf,,April-December,2017,66.301,,93.177,,,7.603,6.096,,,table,gemini-3.5-flash-lite,
+December%202018_5.pdf,,January-November,2017,,92.388,,,,,,,,table,gemini-3.5-flash-lite,
+December%202019.pdf,,April-December,2018,72.329,81.866,74.966,,,4.676,5.909,,,table,gemini-3.5-flash-lite,
+December%202019.pdf,,January-November,2018,,99.916,,,,,,,,table,gemini-3.5-flash-lite,
+February%202019.pdf,,April-January,2018,,85.08,,,,,,,,table,gemini-3.5-flash-lite,
+February%202019.pdf,,April-February,2018,82.012,,115.148,,,8.911,6.999,,,table,gemini-3.5-flash-lite,finished_steel_production:>100(unit?)
+February%202020.pdf,,April-February,2019,89.19,100.878,91.994,,,5.769,7.13,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Final%20Monthly%20Summary%20for%20January%202022_0.pdf,,April-January,2022,86.3,98.39,92.82,,,11.142,3.907,,,text,gemini-3.5-flash-lite,
+Final%20monthly%20summary%20for%20June%2C%2022.pdf,,April-June,2022,27.69,31.39,29.16,,,2.191,1.172,,,text,gemini-3.5-flash-lite,
+January%202019.pdf,,April-January,2018,,,,,,8.218,6.452,,,table,gemini-3.5-flash-lite,
+January%202019.pdf,,January-December,2017,,101.457,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+January%202020.pdf,,April-January,2019,80.816,91.457,83.709,,,,,,,table,gemini-3.5-flash-lite,
+January%202020.pdf,,January-December,2018,,109.272,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+July%202019.pdf,,April-July,2019,31.459,35.884,32.692,,,,,,,table,gemini-3.5-flash-lite,
+July%202019.pdf,,January-June,2018,,54.23,,,,,,,,table,gemini-3.5-flash-lite,
+June%202019.pdf,,April-June,2018,23.584,26.824,33.516,,,1.397,1.897,,,table,gemini-3.5-flash-lite,
+March%202019.pdf,,April-February,2018,,93.625,,,,,,,,table,gemini-3.5-flash-lite,
+March%202019.pdf,,April-March,2018,90.708,103.131,126.856,,,9.619,7.482,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+March%202020_0.pdf,,April-March,2019,98.708,110.921,101.287,,,6.361,7.835,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+May%202019_0.pdf,,April-May,2019,15.286,17.432,21.156,,,1.018,1.218,,,table,gemini-3.5-flash-lite,
+May%202020.pdf,,April-May,2020,16.41,18.489,17.794,,,,,,,table,gemini-3.5-flash-lite,
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf,,April-December,2025,119.3,123.9,117.6,,,,,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf,,January-December,2023,,140.8,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20Economic%20Report%20April%2C%202025.pdf,,January-December,2023,,140.8,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20Economic%20Report%20May%202025.pdf,,April-May,2025,25.11,26.41,25.61,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report%20May%202025.pdf,,January-December,2023,,140.8,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf,,April-February,2023,108.7,115.4,111.53,,,5.9,5.59,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf,,April-May,2023,20.75,23.44,22.37,,,1.55,0.95,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-%20January%202026%20%286%29.pdf,,April-January,2026,133.74,138.82,132.26,,,5.48,4.9,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Economic%20Report-%20June%202026%20%281%29.pdf,,April-June,2026,41.57,42.06,40.99,,,1.59,2.06,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-%20March%202026%20%285%29.pdf,,April-March,2026,163.74,168.42,160.94,,,6.6,6.52,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf,,April-November,2022,75.76,82.07,78.5,,,4.3,3.75,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-July%202025.pdf,,April-July,2022,36.68,41.08,38.7,,,2.57,1.62,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-June%202025.pdf,,April-June,2022,27.5,31.03,29.03,,,2.19,1.17,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-October%202025.pdf,,April-October,2022,65.94,71.53,68.43,,,3.96,3.15,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20Report-September%202025.pdf,,April-September,2022,55.75,61.06,58.36,,,3.6,2.56,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20report%20January%202025_0.pdf,,April-January,2024,,,,,,5.619,6.895,,,table,gemini-3.5-flash-lite,
+Monthly%20Economic%20report%20January%202025_0.pdf,,April-March,2022,105.8,120.3,114.0,,,,,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Economic%20report-February%202025_0.pdf,,April-February,2024,123.8,131.4,126.6,,,6.645,7.749,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Economic%20report-February%202025_0.pdf,,April-March,2022,105.8,120.3,113.6,,,13.5,4.7,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20July%202018.pdf,,January-June,2018,,52.94,,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20November%202018.pdf,,April-November,2018,63.497,,85.925,,,4.325,5.406,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20November%202018.pdf,,January-October,2018,,88.433,,,,,,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20October%202018.pdf,,April-October,2018,56.006,,75.031,,,3.74,4.71,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20October%202018.pdf,,January-September,2018,,79.66,,,,,,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20April-2024.pdf,,April-March,2023,,,,,,6.72,6.02,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20August-2023.pdf,,April-August,2023,52.36,57.26,54.48,,,3.043,2.518,,,mixed,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20August-2024.pdf,,April-March,2020,100.17,109.14,102.62,,,8.36,6.77,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20August-2024.pdf,,April-August,2024,60.26,61.08,58.87,,,1.92,3.45,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20December-2023.pdf,,April-December,2023,99.36,106.08,101.29,,,4.675,5.566,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20July%202023.pdf,,April-July,2023,40.62,45.39,43.01,,,2.563,1.989,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20June%202023.pdf,,April-June,2023,30.29,33.63,32.41,,,2.05,1.401,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20March-2024.pdf,,April-March,2024,135.9,143.6,138.5,,,,,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20May%202022.pdf,,April-May,2023,18.52,20.74,19.11,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20May%202023.pdf,,April-May,2024,20.31,22.3,21.48,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20May-2024.pdf,,April-May,2024,23.04,24.59,23.79,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20November-2023.pdf,,April-November,2023,86.97,94.01,88.81,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20October-2023.pdf,,April-October,2023,75.66,81.75,77.3,,,,,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20September-2023.pdf,,April-September,2023,63.99,69.65,66.1,,,3.232,2.899,,,mixed,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20September-2024%20%281%29.pdf,,April-March,2020,100.17,109.14,102.62,,,8.36,6.77,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20September-2024%20%281%29.pdf,,April-September,2024,72.82,72.83,70.87,,,2.31,4.7,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20the%20Month%20of%20January-2024.pdf,,April-January,2024,112.0,118.0,114.0,,,5.52,6.74,,,mixed,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20the%20Month%20of%20March%202022.pdf,,April-March,2022,105.41,120.11,113.25,,,13.494,4.669,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20the%20month%20of%20August%202022.pdf,,April-August,2022,45.82,51.35,48.27,,,3.024,2.058,,,text,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20the%20month%20of%20February-2024.pdf,,April-February,2024,124.0,131.0,126.0,,,,,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20Summary%20for%20the%20month%20of%20February-2024.pdf,,January-December,2022,,124.7,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20Summary%20for%20the%20month%20of%20July-2024.pdf,,April-July,2024,47.75,48.88,46.66,,,1.57,2.69,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20the%20month%20of%20June-2024.pdf,,April-June,2023,,,,,,1.55,0.95,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20the%20month%20of%20June-2024.pdf,,January-May,2023,,57.4,,,,,,,,table,gemini-3.5-flash-lite,
+Monthly%20Summary%20for%20the%20month%20of%20October%202020.pdf,,April-October,2020,44.52,52.37,47.0,,,7.1,2.35,,,text,gemini-3.5-flash-lite,
+Monthly%20economic%20report%20March%2025.pdf,,April-March,2025,150.2,151.1,145.3,,,4.858,9.532,,,table,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20economic%20report%20March%2025.pdf,,January-December,2023,,140.8,,,,,,,,table,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20summary%20for%20December%202022.pdf,,April-December,2022,85.53,92.46,87.87,,,4.741,4.404,,,text,gemini-3.5-flash-lite,
+Monthly%20summary%20for%20February%202023.pdf,,April-February,2023,107.2,113.44,109.35,,,5.904,5.592,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20summary%20for%20January%202023.pdf,,April-January,2023,96.38,103.18,98.26,,,5.329,5.0,,,text,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+Monthly%20summary%20for%20July%202022.pdf,,April-July,2022,36.53,40.95,38.55,,,2.57,1.616,,,text,gemini-3.5-flash-lite,
+Monthly%20summary%20for%20March%202023.pdf,,April-March,2023,119.17,125.32,121.29,,,6.7,6.02,,,text,gemini-3.5-flash-lite,consumption_value:>100(unit?); crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+Monthly%20summary%20for%20November%202022.pdf,,April-November,2023,75.34,81.9,77.72,,,4.299,3.751,,,text,gemini-3.5-flash-lite,
+Monthly%20summary%20for%20October%202022.pdf,,April-October,2023,65.5,71.29,67.9,,,3.961,3.151,,,text,gemini-3.5-flash-lite,
+Monthly%20summary%20for%20September%202022_0.pdf,,April-September,2023,55.21,61.45,57.84,,,3.601,2.558,,,text,gemini-3.5-flash-lite,
+November%202019.pdf,,April-November,2019,64.176,72.51,66.252,,,,,,,table,gemini-3.5-flash-lite,
+October%202019.pdf,,April-October,2019,56.823,63.318,57.863,,,,,,,table,gemini-3.5-flash-lite,
+September%2018_0.pdf,,January-August,2018,,71.14,,,,,,,,text,gemini-3.5-flash-lite,
+September%2018_0.pdf,,April-September,2018,,,63.76,,,,,,,text,gemini-3.5-flash-lite,
+September%202019.pdf,,April-September,2018,48.447,53.91,49.242,,,3.232,4.001,,,table,gemini-3.5-flash-lite,
+Updated%20Monthly%20Economic%20Report-August%2025.pdf,,April-August,2023,46.28,51.22,48.66,,,3.02,2.06,,,table,gemini-3.5-flash-lite,
+approved%20monthly%20summary%20Dec%2021.pdf,,April-December,2022,75.85,87.07,82.21,,,10.329,3.457,,,text,gemini-3.5-flash-lite,
+final%20Monthly%20summary%20Mar%2721_2.pdf,,April-March,2021,93.43,102.49,94.66,,,10.79,4.75,,,text,gemini-3.5-flash-lite,crude_steel_production:>100(unit?)
+monthly%20summary%20Jan%2C%2021-pdf_0.pdf,,April-January,2021,74.58,82.71,76.04,,,8.84,3.79,,,text,gemini-3.5-flash-lite,
+monthly%20summary%20dec%2C%2020_0.pdf,,April-December,2020,63.46,71.94,64.45,,,8.31,3.21,,,text,gemini-3.5-flash-lite,
+monthly%20summary%20feb%202021.pdf,,April-February,2021,84.07,93.11,85.42,,,9.49,4.25,,,text,gemini-3.5-flash-lite,
+monthly%20summary%20for%20Feb%2C%2022_0.pdf,,April-February,2022,96.03,108.99,102.98,,,12.299,4.318,,,text,gemini-3.5-flash-lite,crude_steel_production:>100(unit?); finished_steel_production:>100(unit?)
+monthly%20summary%20for%20the%20month%20of%20November%202021.pdf,,April-November,2021,66.37,76.44,72.07,,,9.531,3.063,,,text,gemini-3.5-flash-lite,
+monthly%20summary%20nov%2C%2020%20-pdf_compressed_0.pdf,,April-November,2020,53.38,62.01,55.68,,,7.7,2.7,,,text,gemini-3.5-flash-lite,
+monthly%20summary%20sept%2C%2020-%20pdf.pdf,,April-June,2020,12.19,17.25,14.02,,,3.27,1.21,,,mixed,gemini-3.5-flash-lite,
+monthly%20summary%20sept%2C%2020-%20pdf.pdf,,July-September,2020,23.41,25.64,24.3,,,3.28,0.77,,,mixed,gemini-3.5-flash-lite,
+monthly%20summary%20sept%2C%2020-%20pdf.pdf,,April-September,2020,35.6,42.89,38.33,,,6.54,1.98,,,text,gemini-3.5-flash-lite,
+summary%20for%20the%20month%20of%20july%202021_0.pdf,,April-July,2022,,,,,,,,,,text,gemini-3.5-flash-lite,

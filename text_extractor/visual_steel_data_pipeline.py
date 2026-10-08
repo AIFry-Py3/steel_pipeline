@@ -14,12 +14,14 @@ import time
 import requests
 from bs4 import BeautifulSoup
 import pdfplumber
-from llm_extractor import extract_steel_data
+from visual_extractor.llm_visual_extractor import extract_steel_data_batch
+
+BATCH_SIZE = 9  # ~13.6k tokens/file worst case; 100k TPM limit / 13.6k ≈ 7.3
 
 BASE_URL = "https://steel.gov.in"
 PAGE_URL = "https://steel.gov.in/monthly-summary"
 PDF_DIR = "pdfs"
-CSV_PATH = "steel_data.csv"
+CSV_PATH = "data/steel_data.csv"
 HEADERS = {"User-Agent": "Mozilla/5.0 (research/academic data collection)"}
 
 os.makedirs(PDF_DIR, exist_ok=True)
@@ -110,10 +112,18 @@ def already_in_csv(source_filename):
         return any(r["source_file"] == source_filename for r in reader)
 
 
+def chunk_files(file_list, batch_size=BATCH_SIZE):
+    """Yield successive batch_size-sized chunks from file_list."""
+    for i in range(0, len(file_list), batch_size):
+        yield file_list[i:i + batch_size]
+
+
 def main():
     pdf_links = get_all_pdf_links()
     print(f"Found {len(pdf_links)} total PDF links across all pages.")
 
+    # Pass 1: download (if needed) + extract text for every PDF not already in the CSV.
+    pending = []  # list of (filename, text)
     for url in pdf_links:
         exists, filename = already_downloaded(url)
 
@@ -129,11 +139,20 @@ def main():
             continue
 
         text = extract_text(path)
-        parsed_data = extract_steel_data(text, filename)
+        pending.append((filename, text))
+
+    print(f"{len(pending)} PDFs need extraction, in batches of {BATCH_SIZE}.")
+
+    # Pass 2: batch-call the LLM extractor, BATCH_SIZE files per call.
+    for batch in chunk_files(pending):
+        filenames = [name for name, _ in batch]
+        print(f"Extracting batch: {filenames}")
+
+        parsed_data = extract_steel_data_batch(batch)
         time.sleep(6)
 
         if not parsed_data:
-            print(f"Skipping {filename} — extraction failed or returned nothing.")
+            print(f"Skipping batch {filenames} — extraction failed or returned nothing.")
             continue
 
         for row in parsed_data:

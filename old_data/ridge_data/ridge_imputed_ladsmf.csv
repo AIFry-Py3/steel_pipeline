@@ -1,0 +1,111 @@
+source_file,period_month,cumulative_months,period_year,consumption_value,consumption_unit,crude_steel_production,finished_steel_production,crude_steel_export,crude_steel_import,finished_steel_export,finished_steel_import,coal_imports,steel_imports,lag_1,lag_2,lag_3,consumption_value_source
+April%202019_0.pdf,April,,2017,,,,,,,0.747,0.504,,,,,,nan
+April%202019_0.pdf|monthlySummary_May2018.pdf,May,,2017,7.67,MT,,8.82,,,0.641,0.56,,,,,,actual
+April%202019_0.pdf,June,,2017,,,,,,,0.648,0.645,,,7.67,,,nan
+April%202019_0.pdf,July,,2017,,,,,,,0.77,0.799,,,,7.67,,nan
+April%202019_0.pdf|August%202018.pdf,August,,2017,,,,10.52,,,0.924,1.004,,,,,7.67,nan
+April%202019_0.pdf|Monthly%20Summary%20October%202018.pdf|September%2018_0.pdf,September,,2017,7.393793792928422,million tonnes,8.345,10.28,,,1.119,0.811,,,,,,ridge_imputed_4feat
+April%202019_0.pdf|Monthly%20Summary%20November%202018.pdf|Monthly%20Summary%20October%202018.pdf,October,,2017,7.672,million tonnes,8.736,10.398,,,0.778,0.602,,,,,,actual
+April%202019_0.pdf|December%202018_5.pdf|Monthly%20Summary%20November%202018.pdf,November,,2017,6.78,million tonnes,8.604,10.501,,,1.012,0.614,,,7.672,,,actual
+April%202019_0.pdf|December%202018_5.pdf|January%202019.pdf,December,,2017,7.621,million tonnes,9.066,10.946,,,0.964,0.558,,,6.78,7.672,,actual
+April%202019_0.pdf|February%202019.pdf|January%202019.pdf,January,,2018,7.896,million tonnes,9.354,11.385,,,0.615,0.356,,,7.621,6.78,7.672,actual
+April%202019_0.pdf|February%202019.pdf|March%202019.pdf,February,,2018,7.815,million tonnes,8.545,10.586,,,0.693,0.547,,,7.896,7.621,6.78,actual
+April%202019_0.pdf|March%202019.pdf,March,,2018,8.696,million tonnes,9.506,11.708,,,0.708,0.483,,,7.815,7.896,7.621,actual
+April%202019_0.pdf|August%202018.pdf|December%202018_5.pdf|May%202019_0.pdf|Monthly%20Summary%20July%202018.pdf|monthlySummary_May2018.pdf,April,,2018,7.047,Million Tonnes,8.653,10.429,,,0.558,0.598,,,8.696,7.815,7.896,actual
+April%202019_0.pdf|August%202018.pdf|December%202018_5.pdf|June%202019.pdf|May%202019_0.pdf|Monthly%20Summary%20July%202018.pdf|Monthly%20Summary%20June%202018.pdf|monthlySummary_May2018.pdf,May,,2018,8.33,MT,8.779,9.4,,,0.43,0.62,,,7.047,8.696,7.815,actual
+April%202019_0.pdf|December%202018_5.pdf|Final%20monthly%20summary%20for%20June%2C%2022.pdf|July%202019.pdf|June%202019.pdf|Monthly%20Summary%20July%202018.pdf|Monthly%20Summary%20June%202018.pdf,June,,2018,8.1,MT,8.98,8.87,,,0.36,0.68,,,8.33,7.047,8.696,actual
+April%202019_0.pdf|August%202018.pdf|December%202018_5.pdf|January%202019.pdf|July%202019.pdf|Monthly%20summary%20for%20July%202022.pdf|Monthly%20Summary%20July%202018.pdf,July,,2018,7.56,MT,9.06,10.18,,,0.52,0.76,,,8.1,8.33,7.047,actual
+April%202019_0.pdf|August%202018.pdf|December%202018_5.pdf|January%202019.pdf|September%2018_0.pdf,August,,2018,8.34,MT,8.839,10.76,,,0.7,0.67,,,7.56,8.1,8.33,actual
+April%202019_0.pdf|December%202018_5.pdf|January%202019.pdf|Monthly%20Summary%20October%202018.pdf|September%2018_0.pdf|September%202019.pdf,September,,2018,8.22,million tonnes,8.52,10.5,,,0.57,0.67,,,8.34,7.56,8.1,actual
+April%202019_0.pdf|December%202018_5.pdf|January%202019.pdf|June%202019.pdf|Monthly%20Summary%20November%202018.pdf|Monthly%20Summary%20October%202018.pdf|November%202019.pdf,October,,2018,8.315,million tonnes,9.408,11.029,,,0.6,0.71,,,8.22,8.34,7.56,actual
+April%202019_0.pdf|December%202018_5.pdf|December%202019.pdf|January%202019.pdf|June%202019.pdf|monthly%20summary%20for%20the%20month%20of%20November%202021.pdf|Monthly%20Summary%20November%202018.pdf|November%202019.pdf,November,,2018,7.505,million tonnes,9.19,10.877,,,586.0,686.0,,,8.315,8.22,8.34,actual
+approved%20monthly%20summary%20Dec%2021.pdf|April%202019_0.pdf|December%202018_5.pdf|December%202019.pdf|January%202019.pdf|January%202020.pdf|June%202019.pdf,December,,2018,8.339,million tonnes,9.36,11.422,,,0.367,0.548,,,7.505,8.315,8.22,actual
+April%202019_0.pdf|February%202019.pdf|February%202020.pdf|Final%20Monthly%20Summary%20for%20January%202022_0.pdf|January%202019.pdf|January%202020.pdf|July%202019.pdf|June%202019.pdf,January,,2019,8.411,million tonnes,9.59,11.585,,,0.475,0.638,,,8.339,7.505,8.315,actual
+April%202019_0.pdf|February%202019.pdf|February%202020.pdf|July%202019.pdf|June%202019.pdf|March%202019.pdf|March%202020_0.pdf|monthly%20summary%20for%20Feb%2C%2022_0.pdf,February,,2019,8.486,million tonnes,8.914,11.188,,,0.619,0.582,,,8.411,8.339,7.505,actual
+April%202019_0.pdf|April%202020.pdf|July%202019.pdf|June%202019.pdf|March%202019.pdf|March%202020_0.pdf|Monthly%20Summary%20for%20the%20Month%20of%20March%202022.pdf,March,,2019,9.465,million tonnes,9.213,12.272,,,0.592,0.705,,,8.486,8.411,8.339,actual
+April%202019_0.pdf|April%202020.pdf|December%202019.pdf|final%20summary%20for%20April%202022.pdf|January%202020.pdf|July%202019.pdf|June%202019.pdf|May%202019_0.pdf|May%202020.pdf|Monthly%20Summary%20for%20April-2023.pdf|November%202019.pdf,April,,2019,7.5,Million Tonnes,8.662,10.721,,,0.398,0.586,,,9.465,8.486,8.411,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|July%202019.pdf|June%202019.pdf|May%202019_0.pdf|May%202020.pdf|November%202019.pdf,May,,2019,8.78,million tonnes,9.235,10.848,,,0.318,0.535,,,7.5,9.465,8.486,actual
+April%202020.pdf|December%202019.pdf|Final%20monthly%20summary%20for%20June%2C%2022.pdf|January%202020.pdf|July%202019.pdf|June%202019.pdf|November%202019.pdf,June,,2019,8.772,million tonnes,9.3,11.572,,,0.299,0.604,,,8.78,7.5,9.465,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|July%202019.pdf|Monthly%20summary%20for%20July%202022.pdf|November%202019.pdf,July,,2019,8.368,million tonnes,9.239,8.015,,,0.461,0.772,,,8.772,8.78,7.5,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|November%202019.pdf|September%202019.pdf,August,,2019,8.81,Thousand tonne,8.88,8.377,,,0.983,0.856,,,8.368,8.772,8.78,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|November%202019.pdf|October%202019.pdf|September%202019.pdf,September,,2019,8.346,million tonnes,8.417,8.158,,,1.019,0.565,,,8.81,8.368,8.772,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|November%202019.pdf|October%202019.pdf,October,,2019,8.394,million tonnes,8.967,8.186,,,0.95,0.63,,,8.346,8.81,8.368,actual
+April%202020.pdf|December%202019.pdf|January%202020.pdf|monthly%20summary%20for%20the%20month%20of%20November%202021.pdf|November%202019.pdf,November,,2019,7.411,million tonnes,8.923,7.801,,,0.867,0.429,,,8.394,8.346,8.81,actual
+approved%20monthly%20summary%20Dec%2021.pdf|April%202020.pdf|December%202019.pdf|January%202020.pdf,December,,2019,8.33,million tonnes,9.014,8.256,,,0.767,0.437,,,7.411,8.394,8.346,actual
+April%202020.pdf|February%202020.pdf|Final%20Monthly%20Summary%20for%20January%202022_0.pdf|January%202020.pdf,January,,2020,8.788,million tonnes,9.328,8.576,,,0.693,0.477,,,8.33,7.411,8.394,actual
+April%202020.pdf|February%202020.pdf|March%202020_0.pdf|monthly%20summary%20for%20Feb%2C%2022_0.pdf,February,,2020,8.185,million tonnes,9.294,8.565,,,0.57,0.401,,,8.788,8.33,7.411,actual
+April%202020.pdf|March%202020_0.pdf|Monthly%20Summary%20for%20the%20Month%20of%20March%202022.pdf,March,,2020,7.325,million tonnes,7.386,6.745,,,0.453,0.293,,,8.185,8.788,8.33,actual
+April%202020.pdf|final%20summary%20for%20April%202022.pdf|June%202020_0.pdf|May%202020.pdf|monthly%20summary%20dec%2C%2020_0.pdf|Monthly%20Summary%20for%20April-2023.pdf|Summary%20for%20Aug%2020_0.pdf,April,,2020,0.699,Million Tonnes,2.752,1.346,,,0.429,0.407,,,7.325,8.185,8.788,actual
+June%202020_0.pdf|May%202020.pdf|Summary%20for%20Aug%2020_0.pdf,May,,2020,3.036,million tonnes,5.32,3.622,,,1.284,0.539,,,0.699,7.325,8.185,actual
+Final%20monthly%20summary%20for%20June%2C%2022.pdf|June%202020_0.pdf|Summary%20for%20Aug%2020_0.pdf,June,,2020,5.1,million tonnes,6.8,5.9,,,1.55,0.26,,,3.036,0.699,7.325,actual
+Monthly%20summary%20for%20July%202022.pdf|Monthly%20summary%20for%20upload%20to%20website.pdf|Summary%20for%20Aug%2020_0.pdf,July,,2020,6.1,MT,7.5,6.8,,,1.38,0.29,,,5.1,3.036,0.699,actual
+Summary%20for%20Aug%2020_0.pdf,August,,2020,7.5,million tonnes,8.5,7.9,,,,,,,6.1,5.1,3.036,actual
+Monthly%20Summary%20for%20the%20month%20of%20October%202020.pdf,October,,2020,8.4,million tonnes,9.1,8.4,,,0.56,0.37,,,7.5,6.1,5.1,actual
+monthly%20summary%20for%20the%20month%20of%20November%202021.pdf|monthly%20summary%20nov%2C%2020%20-pdf_compressed_0.pdf,November,,2020,8.4,MT,9.2,8.4,,,0.6,0.35,,,8.4,7.5,6.1,actual
+approved%20monthly%20summary%20Dec%2021.pdf,December,,2020,10.26,MILLION TONNE,10.29,9.91,,,,,,,8.4,8.4,7.5,actual
+Final%20Monthly%20Summary%20for%20January%202022_0.pdf|monthly%20summary%20Jan%2C%2021-pdf_0.pdf,January,,2021,8.9,MT,10.0,9.0,,,0.52,0.58,,,10.26,8.4,8.4,actual
+monthly%20summary%20for%20Feb%2C%2022_0.pdf,February,,2021,9.6,million tonnes,9.35,9.05,,,,,,,8.9,10.26,8.4,actual
+final%20Monthly%20summary%20Mar%2721_2.pdf|Monthly%20Summary%20for%20the%20Month%20of%20March%202022.pdf,March,,2021,9.71,million tonnes,10.48,10.11,,,,,,,9.6,8.9,10.26,actual
+final%20summary%20for%20April%202022.pdf|Monthly%20Summary%20for%20April-2023.pdf|Monthly%20Summary%20for%20the%20month%20of%20April%202021.pdf,April,,2021,6.7,MT,8.0,7.1,,,1.0,0.4,,,9.71,9.6,8.9,actual
+Monthly%20Summary%20for%20the%20month%20of%20May%202021.pdf,May,,2021,7.3,million tonnes,8.5,7.8,,,1.24,0.4,,,6.7,9.71,9.6,actual
+Final%20monthly%20summary%20for%20June%2C%2022.pdf|Monthly%20Summary%20for%20the%20month%20of%20June%202021_0.pdf,June,,2021,8.15,million tonnes,9.29,8.7,,,1.37,0.4,,0.4,7.3,6.7,9.71,actual
+Monthly%20summary%20for%20July%202022.pdf|summary%20for%20the%20month%20of%20july%202021_0.pdf,July,,2021,8.3,million tonnes,9.8,9.1,,,1.5,0.4,,,8.15,7.3,6.7,actual
+monthly%20summary%20august%2021.pdf,August,,2021,7.1,million tonnes,9.6,8.7,,,1.28,0.4,,0.4,8.3,8.15,7.3,actual
+final%20monthly%20summary%20for%20the%20month%20of%20september%202021.pdf,September,,2021,,,,,,,,,,,7.1,8.3,8.15,nan
+monthly%20summary%20for%20the%20month%20of%20October%202021.pdf,October,,2021,8.3,million tonnes,9.7,9.0,,,1.06,0.38,,,,7.1,8.3,actual
+monthly%20summary%20for%20the%20month%20of%20November%202021.pdf,November,,2021,8.47,million tonnes,9.63,9.19,,,0.722,0.312,,,8.3,,7.1,actual
+approved%20monthly%20summary%20Dec%2021.pdf,December,,2021,8.73,MILLION TONNE,9.89,9.39,,,0.798,0.395,,,8.47,8.3,,actual
+Final%20Monthly%20Summary%20for%20January%202022_0.pdf,January,,2022,9.65,MT,10.33,9.81,,,0.814,0.45,,,8.73,8.47,8.3,actual
+monthly%20summary%20for%20Feb%2C%2022_0.pdf,February,,2022,9.2,million tonnes,10.11,9.71,,,1.157,0.411,,,9.65,8.73,8.47,actual
+Monthly%20Summary%20for%20the%20Month%20of%20March%202022.pdf,March,,2022,9.85,million tonnes,11.05,10.74,,,1.195,0.351,,,9.2,9.65,8.73,actual
+final%20summary%20for%20April%202022.pdf|Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Summary%20for%20April-2023.pdf,April,,2022,9.05,MT,9.85,9.35,,,0.743,0.327,,,9.85,9.2,9.65,actual
+Monthly%20Summary%20for%20May%202022.pdf,May,,2022,9.45,MT,10.6,9.73,,,0.749,0.379,,,9.05,9.85,9.2,actual
+Final%20monthly%20summary%20for%20June%2C%2022.pdf,June,,2022,9.26,MT,10.46,9.71,,,0.638,0.45,,,9.45,9.05,9.85,actual
+Monthly%20summary%20for%20July%202022.pdf,July,,2022,9.17,million tonnes,9.97,9.66,,,0.38,0.444,,,9.26,9.45,9.05,actual
+Monthly%20Summary%20for%20the%20month%20of%20August%202022.pdf,August,,2022,9.31,MT,10.26,9.74,,,0.454,0.442,,,9.17,9.26,9.45,actual
+Monthly%20summary%20for%20September%202022_0.pdf,September,,2022,9.31,MT,10.22,9.51,,,0.577,0.499,,,9.31,9.17,9.26,actual
+Monthly%20summary%20for%20October%202022.pdf,October,,2022,10.07,million tonnes,10.24,9.85,,,3.6,5.93,,,9.31,9.31,9.17,actual
+Monthly%20summary%20for%20November%202022.pdf,November,,2022,9.66,million tonnes,10.34,9.55,,,3.38,6.0,,,10.07,9.31,9.31,actual
+Monthly%20summary%20for%20December%202022.pdf,December,,2022,10.19,million tonnes,10.5,9.78,,,4.42,6.53,,,9.66,10.07,9.31,actual
+Monthly%20summary%20for%20January%202023.pdf,January,,2023,10.5,million tonnes,10.68,10.04,,,0.588,0.596,,,10.19,9.66,10.07,actual
+Monthly%20summary%20for%20February%202023.pdf,February,,2023,10.1,million tonnes,9.9,9.87,,,0.575,0.593,,,10.5,10.19,9.66,actual
+Monthly%20summary%20for%20March%202023.pdf,March,,2023,10.99,MT,11.34,10.81,,,0.812,0.429,,,10.1,10.5,10.19,actual
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Summary%20for%20April-2023.pdf,April,,2023,9.88,million tonnes,10.51,9.98,,,0.855,0.46,,0.46,10.99,10.1,10.5,actual
+Monthly%20Summary%20for%20June%202023.pdf|Monthly%20Summary%20for%20May%202023.pdf,May,,2023,10.36,MT,11.25,10.88,,,0.693,0.457,,,9.88,10.99,10.1,actual
+Monthly%20Summary%20for%20June%202023.pdf|Monthly%20Summary%20for%20the%20month%20of%20June-2024.pdf,June,,2023,10.64149054078695,MT,11.28,,,,0.502,0.484,,4.8,10.36,9.88,10.99,ridge_imputed_3feat_fallback
+Monthly%20Summary%20for%20July%202023.pdf|Monthly%20Summary%20for%20the%20month%20of%20July-2024.pdf,July,,2023,10.26,million tonnes,11.52,10.53,,,0.513,0.587,,6.1,,10.36,9.88,actual
+Monthly%20Summary%20for%20August-2023.pdf,August,,2023,11.22,million tonnes,11.44,10.94,,,4.8,5.3,,,10.26,,10.36,actual
+Monthly%20Summary%20for%20September-2023.pdf,September,,2023,11.17,MT,11.48,10.93,,,0.157,0.381,,,11.22,10.26,,actual
+Monthly%20Summary%20for%20October-2023.pdf,October,,2023,11.6,million tonnes,11.69,11.01,,,2.86,5.71,,,11.17,11.22,10.26,actual
+Monthly%20Summary%20for%20November-2023.pdf,November,,2023,11.42,million tonnes,11.76,11.02,,,2.34,7.82,,,11.6,11.17,11.22,actual
+Monthly%20Economic%20report%20January%202025_0.pdf|Monthly%20Summary%20for%20December-2023.pdf|Monthly%20Summary%20for%20the%20Month%20of%20January-2024.pdf,December,,2023,12.1,million tonnes,11.97,11.58,,,6.4,7.3,,9.0,11.42,11.6,11.17,actual
+Monthly%20Economic%20report%20January%202025_0.pdf|Monthly%20Economic%20report-February%202025_0.pdf|Monthly%20Summary%20for%20the%20month%20of%20February-2024.pdf|Monthly%20Summary%20for%20the%20Month%20of%20January-2024.pdf,January,,2024,12.0,million tonnes,12.2,11.7,,,8.5,7.7,,7.7,12.1,11.42,11.6,actual
+Monthly%20Economic%20report-February%202025_0.pdf|Monthly%20Summary%20for%20March-2024.pdf|Monthly%20Summary%20for%20the%20month%20of%20February-2024.pdf,February,,2024,11.33,million tonnes,12.05,11.48,,,10.3,7.6,,7.6,12.0,12.1,11.42,actual
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Summary%20for%20April-2024.pdf|Monthly%20Summary%20for%20March-2024.pdf,March,,2024,12.14,MT,12.45,12.17,,,0.84,0.58,,,11.33,12.0,12.1,actual
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Summary%20for%20April-2024.pdf|Monthly%20Summary%20for%20May-2024.pdf,April,,2024,11.08,million tonnes,11.92,11.26,,,5.1,5.9,,,12.14,11.33,12.0,actual
+Monthly%20Economic%20Report-June%202025.pdf|Monthly%20Summary%20for%20May-2024.pdf|Monthly%20Summary%20for%20the%20month%20of%20June-2024.pdf,May,,2024,11.97,million tonnes,12.53,12.13,,,4.3,5.5,,7.2,11.08,12.14,11.33,actual
+Monthly%20Economic%20Report-July%202025.pdf|Monthly%20Economic%20Report-June%202025.pdf|Monthly%20Summary%20for%20the%20month%20of%20June-2024.pdf,June,,2024,12.01,million tonnes,12.26,12.06,,,3.4,5.5,,5.5,11.97,11.08,12.14,actual
+Monthly%20Economic%20Report-July%202025.pdf|Monthly%20Summary%20for%20the%20month%20of%20July-2024.pdf|Updated%20Monthly%20Economic%20Report-August%2025.pdf,July,,2024,12.3,million tonnes,12.34,11.78,,,2.9,7.5,,7.5,12.01,11.97,11.08,actual
+Monthly%20Economic%20Report-September%202025.pdf|Updated%20Monthly%20Economic%20Report-August%2025.pdf,August,,2024,12.034414423165218,million tonnes,12.44,,,,0.34,0.96,,0.96,12.3,12.01,11.97,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-October%202025.pdf|Monthly%20Economic%20Report-September%202025.pdf,September,,2024,11.524722881763084,,11.99,,,,0.4,1.02,,1.02,,12.3,12.01,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf|Monthly%20Economic%20Report-October%202025.pdf,October,,2024,12.446437418520292,,12.81,,,,0.44,1.03,,,,,12.3,ridge_imputed_3feat_fallback
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf|Monthly%20Economic%20report%20January%202025_0.pdf|Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf,November,,2024,11.939323727736557,,12.38,,,,0.4,0.81,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf|Monthly%20Economic%20report%20January%202025_0.pdf|Monthly%20Economic%20report-February%202025_0.pdf,December,,2024,13.087982457653926,,13.4,,,,0.45,0.84,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf|Monthly%20Economic%20report%20January%202025_0.pdf|Monthly%20Economic%20report-February%202025_0.pdf,January,,2025,13.449672486736281,,13.71,,,,0.395,0.868,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf|Monthly%20economic%20report%20March%2025.pdf|Monthly%20Economic%20report-February%202025_0.pdf,February,,2025,12.297806897369519,,12.6,,,,4.1,6.07,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20economic%20report%20March%2025.pdf,March,,2025,13.754698114536078,,14.0,,,,4.53,5.57,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20April%2C%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf|Monthly%20Economic%20Report%20May%202025.pdf|Monthly%20Economic%20Report-June%202025.pdf,April,,2025,11.867,million tonnes,12.644,11.928,,,0.375,0.463,,,,,,actual
+Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf|Monthly%20Economic%20Report%20May%202025.pdf|Monthly%20Economic%20Report-July%202025.pdf|Monthly%20Economic%20Report-June%202025.pdf,May,,2025,13.346852661274678,,13.7,,,,3.91,4.28,,,11.867,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-July%202025.pdf|Monthly%20Economic%20Report-June%202025.pdf|Updated%20Monthly%20Economic%20Report-August%2025.pdf,June,,2025,13.017992704064893,million tonnes,13.48,,,,4.46,4.28,,,,11.867,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-July%202025.pdf|Monthly%20Economic%20Report-September%202025.pdf|Updated%20Monthly%20Economic%20Report-August%2025.pdf,July,,2025,13.668098917274111,million tonnes,13.98,,,,0.49,0.28,,0.45,,,11.867,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-October%202025.pdf|Monthly%20Economic%20Report-September%202025.pdf|Updated%20Monthly%20Economic%20Report-August%2025.pdf,August,,2025,13.778258992323027,million tonnes,14.04,,,,0.53,0.67,,0.67,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf|Monthly%20Economic%20Report-October%202025.pdf|Monthly%20Economic%20Report-September%202025.pdf,September,,2025,13.305322546333848,,13.63,,,,0.58,0.65,,0.65,,,,ridge_imputed_3feat_fallback
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf|Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf|Monthly%20Economic%20Report-October%202025.pdf,October,,2025,13.634556412369784,,13.95,,,,0.64,0.46,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf|Monthly%20Economic%20Report-%20November%202025%20%283%29.docx_.pdf,November,,2025,13.341637056180115,,13.71,,,,0.73,0.39,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Ecomnomic%20Report%20for%20the%20month%20of%20Dec%202025.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf|Monthly%20Economic%20Report-%20January%202026%20%286%29.pdf,December,,2025,14.688060787908109,,14.88,,,,0.62,0.46,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf|Monthly%20Economic%20Report-%20January%202026%20%286%29.pdf,January,,2026,14.947042121324996,,15.14,,,,0.68,0.25,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20February%202026.pdf|Monthly%20Economic%20Report-%20March%202026%20%285%29.pdf,February,,2026,13.77235698506127,,14.07,,,,0.54,0.36,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf|Monthly%20Economic%20Report-%20March%202026%20%285%29.pdf,March,,2026,15.390414404472173,,15.49,,,,0.58,0.52,,,,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report%20for%20the%20month%20of%20April%2C%202026.pdf|Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf,April,,2026,12.99,million tonnes,14.09,13.05,,,0.47,0.68,,,,,,actual
+Monthly%20Economic%20Report%20for%20the%20month%20of%20May%2C%202026.pdf|Monthly%20Economic%20Report-%20June%202026%20%281%29.pdf,May,,2026,13.840136202279318,,14.09,,,,0.51,0.69,,,12.99,,,ridge_imputed_3feat_fallback
+Monthly%20Economic%20Report-%20June%202026%20%281%29.pdf,June,,2026,,,,,,,0.62,0.7,,,,12.99,,nan

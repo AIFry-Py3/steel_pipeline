@@ -1,0 +1,111 @@
+period_month,period_year,consumption_value,consumption_unit,consumption_value_source,lag_1,lag_2
+April,2017,,,,,
+May,2017,7.67,MT,actual,,
+June,2017,,,,7.67,
+July,2017,,,,,7.67
+August,2017,,,,,
+September,2017,7.393793792928422,million tonnes,ridge_imputed_4feat,,
+October,2017,7.672,million tonnes,actual,,
+November,2017,6.78,million tonnes,actual,7.672,
+December,2017,7.621,million tonnes,actual,6.78,7.672
+January,2018,7.896,million tonnes,actual,7.621,6.78
+February,2018,7.815,million tonnes,actual,7.896,7.621
+March,2018,8.696,million tonnes,actual,7.815,7.896
+April,2018,7.047,Million Tonnes,actual,8.696,7.815
+May,2018,8.33,MT,actual,7.047,8.696
+June,2018,8.1,MT,actual,8.33,7.047
+July,2018,7.56,MT,actual,8.1,8.33
+August,2018,8.34,MT,actual,7.56,8.1
+September,2018,8.22,million tonnes,actual,8.34,7.56
+October,2018,8.315,million tonnes,actual,8.22,8.34
+November,2018,7.505,million tonnes,actual,8.315,8.22
+December,2018,8.339,million tonnes,actual,7.505,8.315
+January,2019,8.411,million tonnes,actual,8.339,7.505
+February,2019,8.486,million tonnes,actual,8.411,8.339
+March,2019,9.465,million tonnes,actual,8.486,8.411
+April,2019,7.5,Million Tonnes,actual,9.465,8.486
+May,2019,8.78,million tonnes,actual,7.5,9.465
+June,2019,8.772,million tonnes,actual,8.78,7.5
+July,2019,8.368,million tonnes,actual,8.772,8.78
+August,2019,8.81,Thousand tonne,actual,8.368,8.772
+September,2019,8.346,million tonnes,actual,8.81,8.368
+October,2019,8.394,million tonnes,actual,8.346,8.81
+November,2019,7.411,million tonnes,actual,8.394,8.346
+December,2019,8.33,million tonnes,actual,7.411,8.394
+January,2020,8.788,million tonnes,actual,8.33,7.411
+February,2020,8.185,million tonnes,actual,8.788,8.33
+March,2020,7.325,million tonnes,actual,8.185,8.788
+April,2020,0.699,Million Tonnes,actual,7.325,8.185
+May,2020,3.036,million tonnes,actual,0.699,7.325
+June,2020,5.1,million tonnes,actual,3.036,0.699
+July,2020,6.1,MT,actual,5.1,3.036
+August,2020,7.5,million tonnes,actual,6.1,5.1
+October,2020,8.4,million tonnes,actual,7.5,6.1
+November,2020,8.4,MT,actual,8.4,7.5
+December,2020,10.26,MILLION TONNE,actual,8.4,8.4
+January,2021,8.9,MT,actual,10.26,8.4
+February,2021,9.6,million tonnes,actual,8.9,10.26
+March,2021,9.71,million tonnes,actual,9.6,8.9
+April,2021,6.7,MT,actual,9.71,9.6
+May,2021,7.3,million tonnes,actual,6.7,9.71
+June,2021,8.15,million tonnes,actual,7.3,6.7
+July,2021,8.3,million tonnes,actual,8.15,7.3
+August,2021,7.1,million tonnes,actual,8.3,8.15
+September,2021,,,,7.1,8.3
+October,2021,8.3,million tonnes,actual,,7.1
+November,2021,8.47,million tonnes,actual,8.3,
+December,2021,8.73,MILLION TONNE,actual,8.47,8.3
+January,2022,9.65,MT,actual,8.73,8.47
+February,2022,9.2,million tonnes,actual,9.65,8.73
+March,2022,9.85,million tonnes,actual,9.2,9.65
+April,2022,9.05,MT,actual,9.85,9.2
+May,2022,9.45,MT,actual,9.05,9.85
+June,2022,9.26,MT,actual,9.45,9.05
+July,2022,9.17,million tonnes,actual,9.26,9.45
+August,2022,9.31,MT,actual,9.17,9.26
+September,2022,9.31,MT,actual,9.31,9.17
+October,2022,10.07,million tonnes,actual,9.31,9.31
+November,2022,9.66,million tonnes,actual,10.07,9.31
+December,2022,10.19,million tonnes,actual,9.66,10.07
+January,2023,10.5,million tonnes,actual,10.19,9.66
+February,2023,10.1,million tonnes,actual,10.5,10.19
+March,2023,10.99,MT,actual,10.1,10.5
+April,2023,9.88,million tonnes,actual,10.99,10.1
+May,2023,10.36,MT,actual,9.88,10.99
+June,2023,10.64149054078695,MT,ridge_imputed_3feat_fallback,10.36,9.88
+July,2023,10.26,million tonnes,actual,,10.36
+August,2023,11.22,million tonnes,actual,10.26,
+September,2023,11.17,MT,actual,11.22,10.26
+October,2023,11.6,million tonnes,actual,11.17,11.22
+November,2023,11.42,million tonnes,actual,11.6,11.17
+December,2023,12.1,million tonnes,actual,11.42,11.6
+January,2024,12.0,million tonnes,actual,12.1,11.42
+February,2024,11.33,million tonnes,actual,12.0,12.1
+March,2024,12.14,MT,actual,11.33,12.0
+April,2024,11.08,million tonnes,actual,12.14,11.33
+May,2024,11.97,million tonnes,actual,11.08,12.14
+June,2024,12.01,million tonnes,actual,11.97,11.08
+July,2024,12.3,million tonnes,actual,12.01,11.97
+August,2024,12.034414423165218,million tonnes,ridge_imputed_3feat_fallback,12.3,12.01
+September,2024,11.524722881763084,,ridge_imputed_3feat_fallback,,12.3
+October,2024,12.446437418520292,,ridge_imputed_3feat_fallback,,
+November,2024,11.939323727736555,,ridge_imputed_3feat_fallback,,
+December,2024,13.087982457653926,,ridge_imputed_3feat_fallback,,
+January,2025,13.44967248673628,,ridge_imputed_3feat_fallback,,
+February,2025,12.29780689736952,,ridge_imputed_3feat_fallback,,
+March,2025,13.754698114536078,,ridge_imputed_3feat_fallback,,
+April,2025,11.867,million tonnes,actual,,
+May,2025,13.346852661274678,,ridge_imputed_3feat_fallback,11.867,
+June,2025,13.017992704064891,million tonnes,ridge_imputed_3feat_fallback,,11.867
+July,2025,13.668098917274111,million tonnes,ridge_imputed_3feat_fallback,,
+August,2025,13.778258992323028,million tonnes,ridge_imputed_3feat_fallback,,
+September,2025,13.305322546333848,,ridge_imputed_3feat_fallback,,
+October,2025,13.634556412369784,,ridge_imputed_3feat_fallback,,
+November,2025,13.341637056180115,,ridge_imputed_3feat_fallback,,
+December,2025,14.688060787908109,,ridge_imputed_3feat_fallback,,
+January,2026,14.947042121324996,,ridge_imputed_3feat_fallback,,
+February,2026,13.77235698506127,,ridge_imputed_3feat_fallback,,
+March,2026,15.390414404472171,,ridge_imputed_3feat_fallback,,
+April,2026,12.99,million tonnes,actual,,
+May,2026,13.840136202279318,,ridge_imputed_3feat_fallback,12.99,
+June,2026,,,,,12.99
