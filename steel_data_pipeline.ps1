@@ -7,7 +7,8 @@ Set-Location -Path $PSScriptRoot
 $PipelineScripts = @(
     # '.\visual_extractor\llm_visual_extractor.py',
     # '.\test.py',
-    '.\visual_extractor\llm_vis_groq.py'
+    '.\visual_extractor\get_pdfs.py'
+    '.\visual_extractor\llm_vis_locally.py'
     '.\data cleaning pipeline files\split_by_period_type.py',
     '.\data cleaning pipeline files\csv_sort_merge_dedup.py',
     '.\data cleaning pipeline files\consumption_from_cumulative.py',
